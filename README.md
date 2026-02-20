@@ -1,22 +1,16 @@
 # PizzaDeliveryApi
-A learning-focused FastAPI repository built around a simple Pizza Delivery API. This project is designed to learn FastAPI and SQLModel by reading official documentation and applying concepts step by step in a real-world CRUD API.
+A learning-focused FastAPI repository built around a simple Pizza Delivery API. This project is designed to learn FastAPI and SQLModel by reading [official documentation](https://fastapi.tiangolo.com/learn/) and applying concepts step by step in a real-world CRUD API.
 
 ## Command
-- fastapi dev app/main.py
+- fastapi dev app/main.py  ==> to  Run app in dev Mode
+- 
 
 
 ---
 
-## 📦 Repository Description (you can copy this)
 
-**Title:** `fastapi-sqlmodel-pizza-delivery`
 
-**Description:**
 
-> A learning-focused FastAPI repository built around a simple Pizza Delivery API.
-> This project is designed to learn FastAPI and SQLModel by reading official documentation and applying concepts step by step in a real-world CRUD API.
-
----
 
 ## 🎯 Learning Goals
 
@@ -36,7 +30,7 @@ Because it’s:
 * Simple but realistic
 * Has **real entities** (Pizza, Order, Customer)
 * Covers **CRUD**, relationships, and business logic
-* Easy to extend later (auth, payments, async, etc.)
+* Easy to extend later **(auth, payments, async, etc.)**
 
 ---
 
@@ -83,8 +77,8 @@ fastapi-sqlmodel-pizza-delivery/
 |   ├── __init__.py      # ← Empty file, makes 'app' as package
 │   ├── db.py            # Engine & session
 │   ├── models/          # SQLModel models
-│   ├── schemas/        # Request/response schemas
-│   ├── crud.py          # Database operations
+│   ├── schemas/         # Request/response schemas ie. CustomerPublic
+│   ├── services/        # Database operations and combine table model and data model i.e CustomerService
 │   ├── routes/
 │   │   ├── pizzas.py
 │   │   ├── orders.py
