@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends
-from app.db.database import get_async_session
+
+# from app.db.database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from app.db import get_session
 
 from app.models.user import User
 
@@ -10,7 +12,7 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.get("/")
-async def read_users(session: AsyncSession = Depends(get_async_session)):
+async def read_users(session: AsyncSession = Depends(get_session)):
 
     result = await session.execute(select(User))
 

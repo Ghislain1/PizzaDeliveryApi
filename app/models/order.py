@@ -1,7 +1,18 @@
-from app.db.database import Base
-from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy_utils import ChoiceType
-from sqlalchemy.orm import relationship
+from typing import Optional
+
+# from enum import Enum
+from sqlmodel import (
+    Column,
+    Relationship,
+    SQLModel,
+    Enum,  # ************ Right Emun not from python builtin enum***********
+    Field,
+)
+
+
+from app.models.order_status import OrderStatus
+from app.models.pizza_size import PizzaSize
+
 
 ORDER_STATUSES = (
     ("PENDING", "pending"),
@@ -16,17 +27,24 @@ PIZZA_SIZES = (
 )
 
 
-class Order(Base):
-    __tablename__ = "order"
+class Order(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    quantity: Optional[int] = Field(default=1, nullable=False)
+    # SQLModel Attribut with enum Column
+    order_status: OrderStatus = Field(
+        sa_column=Column(Enum(OrderStatus, name="order_status_enum")),
+        default=OrderStatus.PENDING,
+    )
+    # Defining a Column as Enum
+    pizza_size: PizzaSize = Field(
+        sa_column=Column(Enum(PizzaSize, name="pizza_size_enum")),
+        default=PizzaSize.SMALL,
+    )
 
-    id = Column(Integer, primary_key=True)
-    quantity = Column(Integer, nullable=False)
-    order_status = Column(ChoiceType(choices=ORDER_STATUSES), default="PENDING")
-    pizza_size = Column(ChoiceType(choices=PIZZA_SIZES), default="SMALL")
-
-    # relation
-    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
-    user = relationship("User", back_populates="order")
+    # relation: FK column
+    custom_id: Optional[int] = Field(default=None, foreign_key="customer.id")
+    # relation: many orders -> one customer **** # use string "Customer", no import of Order here ***
+    customer: Optional["Customer"] = Relationship(back_populates="orders")
 
     def __repr__(self):
         return f"<Order {self.id}"

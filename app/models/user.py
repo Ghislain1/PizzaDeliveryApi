@@ -1,4 +1,3 @@
-from app.db.database import Base
 from sqlalchemy import Column, Integer, Boolean, Text, String
 
 # from sqlalchemy.orm import relationship
@@ -7,8 +6,7 @@ from sqlalchemy import Column, Integer, Boolean, Text, String
 # https://www.sqlalchemy.org/   vs. https://fastapi.tiangolo.com/tutorial/sql-databases/
 
 
-class User(Base):
-    __tablename__ = "user"
+class User:
     id = Column(Integer, primary_key=True, autoincrement="auto")
     username = Column(String(25), unique=True)
     email = Column(String(80), unique=True)
