@@ -47,7 +47,7 @@ jobs:
         if [ -d "tests" ] || find . -name "test_*.py" -o -name "*_test.py" | grep -q .; then
           echo "✅ Tests found, running pytest..."
           rm -f test.db *.db
-          DATABASE_URL=sqlite+aiosqlite:///./test.db uv run pytest tests/ -v --cov=app --cov-report=xml || uv run pytest . -v
+          DATABASE_URL=sqlite+aiosqlite:///./test.db uv run pytest tests/ . -v
         else
           echo "ℹ️  No tests found, skipping pytest"
         fi
