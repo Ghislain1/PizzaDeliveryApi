@@ -12,7 +12,7 @@ class CustomerPublic(CustomBase):
 
 class CustomerCreate(CustomBase):
     email: EmailStr
-    password: Optional[str] = "DSSSS"  # ← Plain password from user
+    password: Optional[str] = "admin"  # ← Plain password from user
     is_staff: Optional[bool] = False  # best practice
     is_active: Optional[bool] = True  # best practice
 

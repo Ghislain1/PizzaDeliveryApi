@@ -1,24 +1,104 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from typing import Annotated
 
-# from app.db.database import get_async_session
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from app.db import get_session
-
-from app.models.user import User
-
+fake_users_db = {
+    "johndoe": {
+        "username": "johndoe",
+        "hashed_password": "fakehashedsecret",
+    },
+    "alice": {
+        "username": "alice",
+        "hashed_password": "fakehashedsecret2",
+    },
+    "ghislain": {
+        "username": "ghislain",
+        "hashed_password": "fakehashed0000",
+    },
+}
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-@router.get("/")
-async def read_users(session: AsyncSession = Depends(get_session)):
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl="/auth/token",
+    description="Ghislain Token from Oauth2 Authorize, authorization",
+)
 
-    result = await session.execute(select(User))
 
-    users = [row for row in result.scalars().all()]
+class User(BaseModel):
+    username: str
 
-    return {"posts": users}
+
+class UserInDB(User):
+    hashed_password: str
+
+
+# ----------------------------------------- Start: Methods --------------------------------------
+
+
+def get_user(db, username: str):
+    if username in db:
+        user_dict = db[username]
+        return UserInDB(**user_dict)
+
+
+def fake_decode_token(token):
+    # This doesn't provide any security at all
+    # Check the next version
+    user = get_user(fake_users_db, token)
+    return user
+
+
+def fake_hash_password(password: str):
+    return "fakehashed" + password
+
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    # user = fake_decode_token(token)
+
+    print(f"######### {token}#################{get_current_user} ")
+    return fake_decode_token(token=token)
+
+
+async def get_current_active_user(
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    print(f"######### {current_user}#################{get_current_active_user} ")
+    return current_user
+
+
+# --------------------------------------------------------- END: MEthods  ----------------------------------------
+
+
+# 1
+@router.post("/token")
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    print(
+        f"##################### formDat=  -----    {form_data.username} --{form_data} "
+    )
+    user_dict = fake_users_db.get(form_data.username)
+    if not user_dict:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+
+    user = UserInDB(**user_dict)
+    hashed_password = fake_hash_password(form_data.password)
+    if not hashed_password == user.hashed_password:
+        raise HTTPException(
+            status_code=400,
+            detail="oooooooooooooooooooooo ghu >>>>     Incorrect username or password",
+        )
+
+    return {"access_token": user.username, "token_type": "bearer"}
+
+
+@router.get("/users/me")
+async def read_users_me(
+    current_user: Annotated[User, Depends(get_current_active_user)],
+):
+    print(f"##########################{read_users_me}GGGGGGGGGGGGGGG")
+    return current_user
 
 
 """ 
