@@ -10,6 +10,7 @@ from sqlmodel import (
 )
 
 
+from app.models.customer import Customer
 from app.models.order_status import OrderStatus
 from app.models.pizza_size import PizzaSize
 
@@ -44,7 +45,7 @@ class Order(SQLModel, table=True):
     # relation: FK column
     custom_id: Optional[int] = Field(default=None, foreign_key="customer.id")
     # relation: many orders -> one customer **** # use string "Customer", no import of Order here ***
-    customer: Optional["Customer"] = Relationship(back_populates="orders")
+    customer: Optional[Customer] = Relationship(back_populates="orders")
 
     def __repr__(self):
         return f"<Order {self.id}"

@@ -10,7 +10,6 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 from sqlmodel import Session
 from app.db import get_session
-from app.models.customer import Customer
 from app.schemas.custom_schema import CustomerCreate, CustomerPublic
 from app.services.customer_service import CustomerService
 

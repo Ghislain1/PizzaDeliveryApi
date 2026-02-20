@@ -1,7 +1,11 @@
+from __future__ import annotations
 from typing import Optional, List
 from pydantic import EmailStr
 
+
 from sqlmodel import Field, Relationship, SQLModel
+
+from app.models.order import Order
 
 
 # All fields that are shared by models
@@ -20,13 +24,14 @@ class Customer(CustomBase, table=True):
         sa_column=Field(sa_type=str, max_length=255),
         max_length=255,
     )
+
     # Best Pratice  to store password as hashed string
     hashed_password: str = Field(unique=True, nullable=False)
     is_staff: Optional[bool] = Field(default=False)
     is_active: Optional[bool] = Field(default=False)
 
     # Relation :  one cutomer -->  many orders *** Pylance provides Error  due to Order why?****
-    orders: List["Order"] = Relationship(back_populates="customer")
+    orders: List[Order] = Relationship(back_populates="customer")
 
     def __repr__(self):
         return f"<User {self.username} - {self.email}"
