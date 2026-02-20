@@ -1,14 +1,11 @@
 from fastapi.testclient import TestClient
 import pytest
-from sqlmodel import Session, SQLModel, create_engine, text
+from sqlmodel import Session, SQLModel, create_engine
 from sqlmodel.pool import StaticPool
-from unittest.mock import AsyncMock
+# from unittest.mock import AsyncMock
 
 from app.main import app
 
-# from app.db import engine
-from app.models import Customer, Order
-from app.services.customer_service import CustomerService
 
 SQLITE_URL = "sqlite:///./test.db"
 engine = create_engine(

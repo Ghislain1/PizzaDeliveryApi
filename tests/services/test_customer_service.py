@@ -36,7 +36,7 @@ def test_create_customer_duplicate_email(session):
     service = CustomerService(session)
 
     # Create first customer
-    customer1 = service.create_customer(
+    _ = service.create_customer(
         CustomerCreate(username="alice", email="test@example.com", password="secret")
     )
 
