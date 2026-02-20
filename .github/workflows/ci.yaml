@@ -1,4 +1,4 @@
-name: CI/CD Pipeline (SQLite + uv)
+name: CI/CD Pipeline
 
 on:
   push:
@@ -20,9 +20,14 @@ jobs:
     
     - name: Install Python 3.12.4
       run: uv python install 3.12.4
-    
-    # BUILD: Install dependencies first
-    - name: Build / Install dependencies
+    # Create Environment
+    - name: Create Emviroment(.venv)
+      run: |
+         uv venv
+         .venv\Scripts\activate
+         
+    # Install dependencies first
+    - name: Install dependencies
       run: |
         uv pip install -r requirements.txt
     
