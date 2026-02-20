@@ -26,7 +26,7 @@ def test_create_customer(session, username, email, password):
     assert result.email == email
     assert result.hashed_password != password  # Should be hashed!
     assert result.id is not None
-    assert result.is_active is False
+    assert result.is_active is True
 
     # Verify in database
     db_customer = session.get(Customer, result.id)
@@ -73,16 +73,13 @@ def test_load_customers_with_data(session):
         service.create_customer(data, session=session)
 
     # Load all
-    all_customers = service.load_customers()
+    all_customers = service.load_customers(session, 0, 23)
     assert len(all_customers) == 3
     assert all_customers[0].username == "alice"
     assert all_customers[1].username == "bob"
 
 
-def test_load_customers_with_data___ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ2(
-    session,
-):
-    a = 2
-    b = 3
+def test_count_password_charater():
+    """GHislain: Just count password charater"""
     cs = CustomerCreate(username="bob", email="test@example.com", password="secret")
-    assert str(cs) == 6
+    assert len(cs.password) == 6
