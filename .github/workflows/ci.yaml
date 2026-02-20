@@ -24,8 +24,8 @@ jobs:
     - name: Create Emviroment(.venv)
       run: |
          uv venv
-         .venv\Scripts\activate
-         
+         .venv/bin/activate
+
     # Install dependencies first
     - name: Install dependencies
       run: |
