@@ -12,6 +12,7 @@ class CustomerService:
         self.pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
     def create_customer(self, customer_create: CustomerCreate, session: Session):
+        """Create a new customer with hashed password"""
         # Hash the plain password
         hashed_password = self.pwd_context.hash(customer_create.password)
 
@@ -26,5 +27,7 @@ class CustomerService:
         return db_customer
 
     def load_customers(self, session: Session, offset: int, limit: int):
-        customers = session.exec(select(Customer).offset(offset).limit(limit)).all()
+        """Load all customers from database"""
+        statement = select(Customer)
+        customers = session.exec(statement.offset(offset).limit(limit)).all()
         return customers
