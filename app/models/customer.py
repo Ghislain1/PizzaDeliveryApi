@@ -1,28 +1,32 @@
-from __future__ import annotations
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from pydantic import EmailStr
 
+if TYPE_CHECKING:
+    from app.models.order import Order  # adjust import path
 
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Column, Field, Relationship, String
 
-from app.models.order import Order
+from app.models.base import EntityBase
 
 
 # All fields that are shared by models
-class CustomBase(SQLModel):
+class CustomBase(EntityBase):
+    """Means : Pydantic can used it too, SQLAlchemy can use it too"""
+
     # Colunm Name in table
     username: Optional[str] = Field(default="unknow name ", unique=True, max_length=155)
 
 
 # This is a table model not a data model ( see schema)
 class Customer(CustomBase, table=True):
-    # PK column in the table
-    id: Optional[int] = Field(default=None, primary_key=True)
-
     # Column email in sqlModel with EmailStr validataion
     email: EmailStr = Field(
-        sa_column=Field(sa_type=str, max_length=255),
-        max_length=255,
+        sa_column=Column(
+            String(255),
+            unique=True,
+            index=True,
+            nullable=False,
+        )
     )
 
     # Best Pratice  to store password as hashed string
@@ -31,7 +35,7 @@ class Customer(CustomBase, table=True):
     is_active: Optional[bool] = Field(default=False)
 
     # Relation :  one cutomer -->  many orders *** Pylance provides Error  due to Order why?****
-    orders: List[Order] = Relationship(back_populates="customer")
+    orders: List["Order"] = Relationship(back_populates="customer")
 
     def __repr__(self):
         return f"<User {self.username} - {self.email}"

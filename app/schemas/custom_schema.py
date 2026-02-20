@@ -1,6 +1,7 @@
 from typing import Optional
 
-from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
+from sqlmodel import Field, SQLModel
 
 from app.models.customer import CustomBase
 
@@ -12,9 +13,12 @@ class CustomerPublic(CustomBase):
 
 class CustomerCreate(CustomBase):
     email: EmailStr
-    password: str  # ← Plain password from user
+    password: Optional[str] = "DSSSS"  # ← Plain password from user
     is_staff: Optional[bool] = False  # best practice
     is_active: Optional[bool] = True  # best practice
+
+    def __str__(self):
+        return self.email
 
 
 class CustomerUpdate(CustomBase):

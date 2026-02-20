@@ -16,11 +16,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-"""
-@AuthJWT.load_config
-def get_config():
-    return Settings()
-"""
 
 # Include router from different API
 app.include_router(auth_router)

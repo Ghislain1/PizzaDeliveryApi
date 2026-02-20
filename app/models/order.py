@@ -1,16 +1,19 @@
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.models.customer import Customer  # adjust import path
 
 # from enum import Enum
 from sqlmodel import (
     Column,
     Relationship,
-    SQLModel,
     Enum,  # ************ Right Emun not from python builtin enum***********
     Field,
 )
 
 
-from app.models.customer import Customer
+from app.models.base import EntityBase
+
 from app.models.order_status import OrderStatus
 from app.models.pizza_size import PizzaSize
 
@@ -28,8 +31,8 @@ PIZZA_SIZES = (
 )
 
 
-class Order(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
+class Order(EntityBase, table=True):
+    # id: Optional[int] = Field(default=None, primary_key=True)
     quantity: Optional[int] = Field(default=1, nullable=False)
     # SQLModel Attribut with enum Column
     order_status: OrderStatus = Field(
@@ -44,8 +47,9 @@ class Order(SQLModel, table=True):
 
     # relation: FK column
     custom_id: Optional[int] = Field(default=None, foreign_key="customer.id")
+
     # relation: many orders -> one customer **** # use string "Customer", no import of Order here ***
-    customer: Optional[Customer] = Relationship(back_populates="orders")
+    customer: Optional["Customer"] = Relationship(back_populates="orders")
 
     def __repr__(self):
         return f"<Order {self.id}"

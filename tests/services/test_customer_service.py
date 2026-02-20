@@ -13,11 +13,13 @@ from app.schemas.custom_schema import CustomerCreate
 )
 def test_create_customer(session, username, email, password):
     """Test create_customer works with valid data"""
-    service = CustomerService(session)
+
+    # Arrange
+    service = CustomerService()
     customer_data = CustomerCreate(username=username, email=email, password=password)
 
     # Act
-    result = service.create_customer(customer_data)
+    result = service.create_customer(customer_data, session=session)
 
     # Assert
     assert result.username == username
@@ -33,30 +35,32 @@ def test_create_customer(session, username, email, password):
 
 def test_create_customer_duplicate_email(session):
     """Test duplicate email raises error"""
-    service = CustomerService(session)
+    service = CustomerService()
 
     # Create first customer
     _ = service.create_customer(
-        CustomerCreate(username="alice", email="test@example.com", password="secret")
+        CustomerCreate(username="alice", email="test@example.com", password="secret"),
+        session=session,
     )
 
     # Try duplicate
     with pytest.raises(Exception):  # Unique constraint violation
         service.create_customer(
-            CustomerCreate(username="bob", email="test@example.com", password="secret")
+            CustomerCreate(username="bob", email="test@example.com", password="secret"),
+            session=session,
         )
 
 
 def test_load_customers_empty(session):
     """Test load_customers returns empty list when no customers"""
-    service = CustomerService(session)
-    customers = service.load_customers()
+    service = CustomerService()
+    customers = service.load_customers(session=session, offset=0, limit=1)
     assert len(customers) == 0
 
 
 def test_load_customers_with_data(session):
     """Test load_customers returns all customers"""
-    service = CustomerService(session)
+    service = CustomerService()
 
     # Create 3 customers
     customers_data = [
@@ -66,10 +70,19 @@ def test_load_customers_with_data(session):
     ]
 
     for data in customers_data:
-        service.create_customer(data)
+        service.create_customer(data, session=session)
 
     # Load all
     all_customers = service.load_customers()
     assert len(all_customers) == 3
     assert all_customers[0].username == "alice"
     assert all_customers[1].username == "bob"
+
+
+def test_load_customers_with_data___ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ2(
+    session,
+):
+    a = 2
+    b = 3
+    cs = CustomerCreate(username="bob", email="test@example.com", password="secret")
+    assert str(cs) == 6

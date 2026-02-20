@@ -3,7 +3,7 @@ A learning-focused FastAPI repository built around a simple Pizza Delivery API. 
 
 ## Commands and Findinds
 - fastapi dev app/main.py  ==> to  Run app in dev Mode
-- uv add -r requirements.txt ===> Migrate to pyproject.toml fully → uv add -r requirements.txt
+- uv run pytest tests/ . -v ==> Run all py test cmd
 - Modern we don't requirements.txt usage  **requirements.txt**
 
 
