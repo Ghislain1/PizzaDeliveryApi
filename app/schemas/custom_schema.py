@@ -1,7 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
-from sqlmodel import Field, SQLModel
+from pydantic import EmailStr
 
 from app.models.customer import CustomBase
 

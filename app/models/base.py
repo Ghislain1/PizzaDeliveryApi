@@ -1,7 +1,6 @@
 from __future__ import annotations
-from typing import Generic, Optional, TypeVar, List
-from sqlalchemy.orm import declared_attr
-from sqlmodel import SQLModel, Field, Relationship
+from typing import Optional, TypeVar
+from sqlmodel import SQLModel, Field
 
 # Generic Base Class
 T = TypeVar("T")
