@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+
 from app.db import create_db_and_tables, seed_db_if_empty
 from app.routers.auth_routes import router as auth_router
 from app.routers.order_routes import router as order_router
