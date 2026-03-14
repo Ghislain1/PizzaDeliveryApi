@@ -22,7 +22,7 @@ async def seed_db_if_empty():
     if user_exists:
         return  # DB got data
 
-    # Seed  iitial data
+    # Seed  initial data
     admin = User(
         email="ghis@hallo.fr", username="POKEMON", password="admin1", is_active=True
     )

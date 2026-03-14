@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
+
+from app.core.security import oauth2_scheme
 
 fake_users_db = {
     "johndoe": {
@@ -19,12 +21,6 @@ fake_users_db = {
 }
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
-
-
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="/auth/token",
-    description="Ghislain Token from Oauth2 Authorize, authorization",
-)
 
 
 class User(BaseModel):
@@ -62,6 +58,11 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     return fake_decode_token(token=token)
 
 
+async def get_current_user2():
+
+    return "Just for test"
+
+
 async def get_current_active_user(
     current_user: Annotated[User, Depends(get_current_user)],
 ):
@@ -73,31 +74,18 @@ async def get_current_active_user(
 
 
 # 1
+
+
 @router.post("/token")
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
-    print(
-        f"##################### formDat=  -----    {form_data.username} --{form_data} "
-    )
-    user_dict = fake_users_db.get(form_data.username)
-    if not user_dict:
-        raise HTTPException(status_code=400, detail="Incorrect username or password")
 
-    user = UserInDB(**user_dict)
-    hashed_password = fake_hash_password(form_data.password)
-    if not hashed_password == user.hashed_password:
-        raise HTTPException(
-            status_code=400,
-            detail="oooooooooooooooooooooo ghu >>>>     Incorrect username or password",
-        )
-
-    return {"access_token": user.username, "token_type": "bearer"}
+    return {"access_token": "user.username", "token_type": "bearer"}
 
 
 @router.get("/users/me")
-async def read_users_me(
-    current_user: Annotated[User, Depends(get_current_active_user)],
+async def read_me(
+    current_user: Annotated[str, Depends(get_current_user2)],
 ):
-    print(f"##########################{read_users_me}GGGGGGGGGGGGGGG")
     return current_user
 
 

@@ -26,7 +26,9 @@ class CustomMiddleware(BaseHTTPMiddleware):
     async def __add_process_time_header__(self, request: Request, call_next) -> None:
         """Header hinzufügen"""
         start_time = time.perf_counter()  # why perf_counter here?
+
         response: Response = await call_next(request)
+
         process_time = 1000 * (time.perf_counter() - start_time)
         #  TODO: Understand Response headers Option see in api-docs
         # https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers
