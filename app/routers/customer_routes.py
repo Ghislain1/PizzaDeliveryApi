@@ -12,6 +12,8 @@ from sqlmodel import Session
 from app.db import get_session
 from app.schemas.custom_schema import CustomerCreate, CustomerPublic
 from app.services.customer_service import CustomerService
+from app.core.dependencies import PrinterDep, get_printer_service
+from app.services.printer_service import PrinterService
 
 
 router = APIRouter(prefix="/customers", tags=["Customers"])
@@ -36,8 +38,12 @@ def create_customer(
 @router.get("/", response_model=list[CustomerPublic])
 def read_customers(
     session: Annotated[Session, Depends(get_session)],
+    printer: PrinterDep,
     offset: int = 0,
     limit: Annotated[int, Query(le=100)] = 100,
 ):
     customers = customer_service.load_customers(session, offset, limit)
+    printer.print_debug(
+        "================================================= read_customers ==============="
+    )
     return customers

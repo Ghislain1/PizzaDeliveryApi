@@ -9,16 +9,16 @@ from app.routers.auth_routes import router as auth_router
 from app.routers.order_routes import router as order_router
 from app.routers.customer_routes import router as customer_router
 from app.core.middlewares import CustomMiddleware
-from app.services.printer_service import PrinterService
 
-printer_service = PrinterService()
+from app.core.dependencies import get_printer_service
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await create_db_and_tables()
-    printer_service.print_debug("Create DB AND TABLES")
+    get_printer_service().print_debug("Create DB AND TABLES")
     await seed_db_if_empty()
+
     yield
 
 

@@ -14,4 +14,4 @@ class PrinterService:
         frame = inspect.currentframe().f_back
         file = frame.f_code.co_filename
         line = frame.f_lineno
-        print(f"[cyan]{file}:{line}[/] {msg}")
+        print(f"\n[yellow]{file}:{line} {msg} [/]\n")
