@@ -12,8 +12,7 @@ from sqlmodel import Session
 from app.db import get_session
 from app.schemas.custom_schema import CustomerCreate, CustomerPublic
 from app.services.customer_service import CustomerService
-from app.core.dependencies import PrinterDep, get_printer_service
-from app.services.printer_service import PrinterService
+from app.core.dependencies import PrinterDep
 
 
 router = APIRouter(prefix="/customers", tags=["Customers"])

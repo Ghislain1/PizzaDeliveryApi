@@ -8,7 +8,7 @@ A learning-focused FastAPI repository built around a simple Pizza Delivery API. 
 - uv run ruff check . --fix  ==> ruff must be installed
 - uv pip freeze > requirements.txt ==>  in that file you see all used package
 - uv export --format requirements-txt --no-hashes > requirements.txt ==>  to sync with uv add package 
-
+-  ruff check . ==> Check or lint the  code  to find code spelling
 ## External packages
 - 
 ---
@@ -63,14 +63,7 @@ Because it’s:
 * Separation of concerns
 * Error handling
 
-### 4️⃣ Real-World Patterns
 
-* Dependency injection (`Depends`)
-* Database sessions per request
-* Reusable schemas
-* Simple business logic (order total, availability)
-
----
 
 ## 🗂️ Suggested Repo Structure
 
@@ -96,30 +89,7 @@ fastapi-sqlmodel-pizza-delivery/
 
 ---
 
-## 🔄 Example Domain Model
 
-* **Pizza**
-
-  * id
-  * name
-  * price
-  * available
-
-* **Customer**
-
-  * id
-  * name
-  * address
-
-* **Order**
-
-  * id
-  * customer_id
-  * pizza_id
-  * quantity
-  * total_price
-
----
 
 ## 🧭 How to Learn with This Repo
 
@@ -148,7 +118,7 @@ Once you’re comfortable:
 * Async database
 * Alembic migrations
 * Pagination & filtering
-* Docker
+* Docker**
 
 ---
 
