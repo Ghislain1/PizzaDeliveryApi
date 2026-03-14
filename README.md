@@ -2,12 +2,15 @@
 A learning-focused FastAPI repository built around a simple Pizza Delivery API. This project is designed to learn FastAPI and SQLModel by reading [official documentation](https://fastapi.tiangolo.com/learn/) and applying concepts step by step in a real-world CRUD API.
 
 ## Commands and Findings
+- .venv\Scripts\activate  ==> activate my virtual environment
 - fastapi dev app/main.py  ==> to  Run app in dev Mode
 - uv run pytest tests/ . -v ==> Run all py test cmd
--  uv run ruff check . --fix  ==> ruff must be installed
-- Modern we don't requirements.txt usage  **requirements.txt**
+- uv run ruff check . --fix  ==> ruff must be installed
+- uv pip freeze > requirements.txt : in that file you see all used package
+- uv pip true 
 
-
+## External packages
+- 
 ---
 
 
