@@ -1,4 +1,5 @@
 from typing import Optional, TYPE_CHECKING
+from enum import Enum as PyEnum
 
 if TYPE_CHECKING:
     from backend.models.customer import Customer  # adjust import path
@@ -11,11 +12,7 @@ from sqlmodel import (
     Field,
 )
 
-
 from backend.models.base import EntityBase
-
-from backend.models.order_status import OrderStatus
-from backend.models.pizza_size import PizzaSize
 
 
 ORDER_STATUSES = (
@@ -29,6 +26,21 @@ PIZZA_SIZES = (
     ("LARGE", "large"),
     ("EXTRA_LARGE", "extra-large"),
 )
+
+
+# enum for size of pizza
+class PizzaSize(str, PyEnum):
+    SMALL = "small"
+    MEDIUM = "medium"
+    LARGE = "large"
+    EXTRA_LARGE = "extra-large"
+
+
+# Enum for order status
+class OrderStatus(str, PyEnum):
+    PENDING = "pending"
+    IN_TRANSIT = "in-transit"
+    DELIVERED = "delivered"
 
 
 class Order(EntityBase, table=True):

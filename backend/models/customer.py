@@ -17,9 +17,9 @@ class CustomBase(EntityBase):
     username: Optional[str] = Field(default="unknow name ", unique=True, max_length=155)
 
 
-# This is a table model not a data model ( see schema)
+# This is a table model not a data model (see schema)
 class Customer(CustomBase, table=True):
-    # Column email in sqlModel with EmailStr validataion
+    # 1. Column email in sqlModel with EmailStr validataion
     email: EmailStr = Field(
         sa_column=Column(
             String(255),
@@ -29,12 +29,14 @@ class Customer(CustomBase, table=True):
         )
     )
 
-    # Best Pratice  to store password as hashed string
+    # 2. Best Pratice  to store password as hashed string
     hashed_password: str = Field(unique=True, nullable=False)
+    # 3. Why is the purpose of staff?
     is_staff: Optional[bool] = Field(default=False)
+    # 4.
     is_active: Optional[bool] = Field(default=False)
 
-    # Relation :  one cutomer -->  many orders *** Pylance provides Error  due to Order why?****
+    # 4. Relation :  one cutomer -->  many orders *** Pylance provides Error  due to Order why?****
     orders: List["Order"] = Relationship(back_populates="customer")
 
     def __repr__(self):

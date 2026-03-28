@@ -6,25 +6,27 @@ from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 
 # Pizza
-from backend.db import create_db_and_tables, seed_db_if_empty
+
+from backend.db.database import create_db_and_tables
 from backend.routers.auth_routes import router as auth_router
 from backend.routers.order_routes import router as order_router
 from backend.routers.customer_routes import router as customer_router
 from backend.core.middlewares import CustomMiddleware
 
-from backend.core.dependencies import get_printer_service
+from backend.core.dependencies import PrinterDep
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    PrinterDep().print_info("MAIN", "################ Create DB AND TABLES")
     await create_db_and_tables()
-    get_printer_service().print_debug("Create DB AND TABLES")
-    await seed_db_if_empty()
+    PrinterDep().print_debug("Create DB AND TABLES")
 
     yield
 
 
 app = FastAPI(lifespan=lifespan, title="PizzaDeliveryApp")
+
 # Create behing the scene endpoint /metrics
 Instrumentator().instrument(app=app).expose(app=app)
 

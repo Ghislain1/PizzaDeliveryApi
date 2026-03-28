@@ -5,24 +5,21 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
 
-POSTGRES_URL = "postgresql://postgres:namej345@localhost/pizza_deliver_db"
-DATABASE_URL = "sqlite+aiosqlite:///./test.db"  # U must install aiosqlite
-SQLITE_URL = "sqlite:///./pizza_deliver.db"
-
-# engine = create_engine(SQLITE_URL, echo=True, connect_args={"check_same_thread": False})
+# POSTGRES_URL = "postgresql://postgres:namej345@localhost/pizza_deliver_db"
+DATABASE_URL = "sqlite+aiosqlite:///./pizza_deliver_db.db"  # U must install aiosqlite
 
 
-# ---------------------------------------------------------- Classes --------------------------------------
+# 1. ---------------------------------------------------------- Classes --------------------------------------
 class Base(DeclarativeBase):
     pass
 
 
-# -------------------------------------------------------- Engine and Session  ------------------------------------
+# 2. -------------------------------------------------------- Engine and Session  ------------------------------------
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
 
-# ------------------------------ Methods ------------------------------------------
+# 3. ------------------------------ Methods ------------------------------------------
 async def create_db_and_tables():
     async with engine.begin() as connection:
         await connection.run_sync(Base.metadata.create_all)

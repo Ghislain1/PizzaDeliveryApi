@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import EmailStr
+from pydantic import EmailStr, BaseModel
 
 from backend.models.customer import CustomBase
 
@@ -10,11 +10,9 @@ class CustomerPublic(CustomBase):
     id: int  # ovevrride id from CustomBase
 
 
-class CustomerCreate(CustomBase):
+class CustomerCreate(BaseModel):
     email: EmailStr
     password: Optional[str] = "admin"  # ← Plain password from user
-    is_staff: Optional[bool] = False  # best practice
-    is_active: Optional[bool] = True  # best practice
 
     def __str__(self):
         return self.email

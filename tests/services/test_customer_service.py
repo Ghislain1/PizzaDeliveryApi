@@ -1,7 +1,7 @@
 import pytest
 from backend.models.customer import Customer
 from backend.services.customer_service import CustomerService
-from backend.schemas.custom_schema import CustomerCreate
+from backend.schemas.customer_schema import CustomerCreate
 
 
 @pytest.mark.parametrize(
