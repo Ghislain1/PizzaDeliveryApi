@@ -10,9 +10,8 @@ from sqlmodel import (
     Relationship,
     Enum,  # ************ Right Emun not from python builtin enum***********
     Field,
+    SQLModel,
 )
-
-from backend.models.base import EntityBase
 
 
 ORDER_STATUSES = (
@@ -43,9 +42,12 @@ class OrderStatus(str, PyEnum):
     DELIVERED = "delivered"
 
 
-class Order(EntityBase, table=True):
-    # id: Optional[int] = Field(default=None, primary_key=True)
+class Order(SQLModel, table=True):
+    """Order Table"""
+
+    id: Optional[int] = Field(default=None, primary_key=True)
     quantity: Optional[int] = Field(default=1, nullable=False)
+
     # SQLModel Attribut with enum Column
     order_status: OrderStatus = Field(
         sa_column=Column(Enum(OrderStatus, name="order_status_enum")),

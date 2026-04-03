@@ -2,19 +2,17 @@ from typing import Optional
 
 from pydantic import EmailStr, BaseModel
 
-from backend.models.customer import CustomBase
 
-
-# TODO@Ghislain1 To remove  https://fastapi.tiangolo.com/tutorial/sql-databases/#heropublic-the-public-data-model
-class CustomerPublic(CustomBase):
-    id: int  # ovevrride id from CustomBase
+from backend.schemas.order_schema import OrderRead
 
 
 class CustomerRead(BaseModel):
     "This class is used as Response Model in Router"
 
+    id: int
     email: str
     username: str
+    orders: list[OrderRead]
 
 
 class CustomerCreate(BaseModel):
@@ -26,7 +24,7 @@ class CustomerCreate(BaseModel):
         return self.email
 
 
-class CustomerUpdate(CustomBase):
+class CustomerUpdate(BaseModel):
     email: EmailStr | None = None
     is_staff: bool
     is_active: bool
