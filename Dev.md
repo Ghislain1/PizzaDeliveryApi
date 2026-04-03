@@ -9,7 +9,10 @@
 -  Password Hash
    -  Hashing Algo
    -  understand package passlib[bcrypt]
-
+- Seller Login
+  - PassWordRequestForm class
+  - Usage JWT Token
+  - 
 
 
 # Tasks

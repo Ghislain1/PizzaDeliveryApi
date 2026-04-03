@@ -1,7 +1,7 @@
 from typing import AsyncGenerator
 
 
-from sqlalchemy.orm import DeclarativeBase
+from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
 
@@ -10,7 +10,7 @@ DATABASE_URL = "sqlite+aiosqlite:///./pizza_deliver.db"  # U must install aiosql
 
 
 # 1. ---------------------------------------------------------- Classes --------------------------------------
-class Base(DeclarativeBase):
+class Base(SQLModel):
     pass
 
 
@@ -22,7 +22,7 @@ async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 # 3. ------------------------------ Methods ------------------------------------------
 async def create_db_and_tables():
     async with engine.begin() as connection:
-        await connection.run_sync(fn=Base.metadata.create_all)
+        await connection.run_sync(SQLModel.metadata.create_all)
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:

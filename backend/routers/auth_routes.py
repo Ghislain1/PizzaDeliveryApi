@@ -12,9 +12,15 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/token")
-async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+async def login(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    customer_service: CustomerServiceDep,
+):
     username = form_data.username
-    return {"access_token": username, "token_type": "bearer"}
+    password = form_data.password
+
+    token = await customer_service.token(username, password=password)
+    return {"access_token": token, "token_type": "bearer"}
 
 
 # To Register a customer

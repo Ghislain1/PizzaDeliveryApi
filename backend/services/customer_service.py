@@ -2,6 +2,7 @@
 from passlib.context import CryptContext
 from sqlmodel import select
 from fastapi.exceptions import HTTPException
+from starlette import status
 
 from backend.models.customer import Customer
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -55,3 +56,35 @@ class CustomerService:
         #  Check name
 
         return db_customer
+
+    async def token(self, email, password) -> str:
+        """Valide the credentials"""
+
+        condition_on_email = Customer.email == email
+        # Select the table like the name of method @TODO Ghis select from sqlmodel
+        select(Customer).where(condition_on_email)
+
+        statement = self.session.get(
+            Customer, email
+        )  # TODO@Ghislain: So  create a statement using Session
+
+        result = await self.session.execute(statement=statement)
+        customer: Customer = result.scalar()
+
+        if customer is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="[Ghis]> The Customer with that email is not found!!",
+            )
+
+        # Check Password
+        is_ok = self.pwd_context.verify(password, customer.hashed_password)
+        if not is_ok:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="[Ghis]> The Customer with that Password is incorrect!",
+            )
+
+        # Generate Token
+
+        return
