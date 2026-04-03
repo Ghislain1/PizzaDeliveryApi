@@ -9,7 +9,7 @@ class ShipmentCreate(ShipmentBase):
 
 
 class ShipmentPublic(ShipmentBase):
-    id: int
+    id: UUID
 
 
 class ShipmentUpdate(ShipmentBase):

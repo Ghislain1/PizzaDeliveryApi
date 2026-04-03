@@ -8,7 +8,7 @@ class SellerBase(SQLModel):
     name: str
     email: EmailStr
     created_at: datetime
-    rating: int
+    rating: int | None = Field(default=None)
     password_hashed: str
 
 

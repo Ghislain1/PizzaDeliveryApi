@@ -6,10 +6,11 @@ from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
 from scalar_fastapi import get_scalar_api_reference
 
-from backend.db.database import create_db_and_tables
+from backend.db.database import create_db_and_tables, seed_db_if_empty
 from backend.routers.auth_routes import router as auth_router
 from backend.routers.order_routes import router as order_router
 from backend.routers.seller import router as seller_router
+from backend.routers.shipment import router as shipment_router
 
 from backend.core.middlewares import CustomMiddleware
 
@@ -18,6 +19,7 @@ from backend.core.middlewares import CustomMiddleware
 async def lifespan(app: FastAPI):
     # PrinterDep().print_info("MAIN", "################ Create DB AND TABLES")
     await create_db_and_tables()
+    await seed_db_if_empty()
 
     yield
 
@@ -32,6 +34,7 @@ app.add_middleware(CustomMiddleware)
 
 # Include router from different API
 app.include_router(auth_router)
+app.include_router(shipment_router)
 app.include_router(order_router)
 app.include_router(seller_router)
 
