@@ -1,10 +1,9 @@
-from typing import Optional, List, TYPE_CHECKING
-from pydantic import EmailStr
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from backend.models.order import Order  # adjust import path
 
-from sqlmodel import UUID, Column, Field, Relationship, SQLModel, String
+from sqlmodel import UUID, Relationship, SQLModel
 
 
 class Product(SQLModel, table=True):
