@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from typing import Annotated
 
 from fastapi.security import OAuth2PasswordBearer
+from backend.core.dependencies import OrderServiceDep
 from backend.core.security import oauth2_scheme
 
 
@@ -17,3 +18,10 @@ async def get_specific_order(
     id: int, authorize: Annotated[OAuth2PasswordBearer, Depends(oauth2_scheme)]
 ):
     pass
+
+
+@router.get("/")
+async def get_all_orders(order_service: OrderServiceDep):
+
+    # All
+    await order_service.all()

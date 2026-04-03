@@ -37,7 +37,7 @@ class Customer(CustomBase, table=True):
     is_active: Optional[bool] = Field(default=False)
 
     # 4. Relation :  one cutomer -->  many orders *** Pylance provides Error  due to Order why?****
-    # orders: List["Order"] = Relationship(back_populates="customer")
+    orders: List["Order"] = Relationship(back_populates="customer")
 
     def __repr__(self):
         return f"<User {self.username} - {self.email}"
