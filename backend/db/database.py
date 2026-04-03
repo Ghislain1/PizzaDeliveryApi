@@ -22,7 +22,7 @@ async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 # 3. ------------------------------ Methods ------------------------------------------
 async def create_db_and_tables():
     async with engine.begin() as connection:
-        await connection.run_sync(Base.metadata.create_all)
+        await connection.run_sync(fn=Base.metadata.create_all)
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
