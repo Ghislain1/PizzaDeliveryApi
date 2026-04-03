@@ -1,4 +1,8 @@
 # Udemy 
+# Scalar Fast API
+- package scalar-fastapi
+- Scalar API Reference Plugin for FastAPI
+- https://scalar.com/products/api-references/integrations/fastapi
 ## Register User (Section 11)
 - Seller Model
   - Represent a table  Seller

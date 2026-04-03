@@ -3,7 +3,8 @@ from passlib.context import CryptContext
 from sqlmodel import select
 from fastapi.exceptions import HTTPException
 from starlette import status
-
+import jwt
+from datetime import datetime, timedelta
 from backend.models.customer import Customer
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -62,13 +63,10 @@ class CustomerService:
 
         condition_on_email = Customer.email == email
         # Select the table like the name of method @TODO Ghis select from sqlmodel
-        select(Customer).where(condition_on_email)
-
-        statement = self.session.get(
-            Customer, email
-        )  # TODO@Ghislain: So  create a statement using Session
+        statement = select(Customer).where(condition_on_email)
 
         result = await self.session.execute(statement=statement)
+
         customer: Customer = result.scalar()
 
         if customer is None:
@@ -85,6 +83,17 @@ class CustomerService:
                 detail="[Ghis]> The Customer with that Password is incorrect!",
             )
 
-        # Generate Token
+        # @TODO JWT got 3 parts , head, payloadGenerate Token
+        payload = {
+            "user": {
+                "name": customer.username,
+                "email": customer.email,
+            },
+            "exp": datetime.now() + timedelta(minutes=10),
+        }
+        # @TODO Must be move to .env
+        algo = "HS256"
+        key = "ANY_KEY_GHISLAIN"
 
-        return
+        tk = jwt.encode(payload=payload, key=key, algorithm=algo)
+        return tk

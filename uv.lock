@@ -743,6 +743,7 @@ dependencies = [
     { name = "pydantic-extra-types" },
     { name = "pydantic-settings" },
     { name = "pygments" },
+    { name = "pyjwt" },
     { name = "pytest" },
     { name = "python-dotenv" },
     { name = "python-multipart" },
@@ -751,6 +752,7 @@ dependencies = [
     { name = "rich-toolkit" },
     { name = "rignore" },
     { name = "ruff" },
+    { name = "scalar-fastapi" },
     { name = "sentry-sdk" },
     { name = "shellingham" },
     { name = "sqlalchemy" },
@@ -801,6 +803,7 @@ requires-dist = [
     { name = "pydantic-extra-types", specifier = "==2.11.0" },
     { name = "pydantic-settings", specifier = "==2.12.0" },
     { name = "pygments", specifier = "==2.19.2" },
+    { name = "pyjwt", specifier = ">=2.11.0" },
     { name = "pytest", specifier = ">=9.0.2" },
     { name = "python-dotenv", specifier = "==1.2.1" },
     { name = "python-multipart", specifier = "==0.0.22" },
@@ -809,6 +812,7 @@ requires-dist = [
     { name = "rich-toolkit", specifier = "==0.18.1" },
     { name = "rignore", specifier = "==0.7.6" },
     { name = "ruff", specifier = ">=0.15.2" },
+    { name = "scalar-fastapi", specifier = ">=1.8.1" },
     { name = "sentry-sdk", specifier = "==2.52.0" },
     { name = "shellingham", specifier = "==1.5.4" },
     { name = "sqlalchemy", specifier = "==2.0.46" },
@@ -1262,6 +1266,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/23/01/1c30526460f4d23222d0fabd5888868262fd0e2b71a00570ca26483cd993/ruff-0.15.2-py3-none-win32.whl", hash = "sha256:fd5ff9e5f519a7e1bd99cbe8daa324010a74f5e2ebc97c6242c08f26f3714f6f", size = 10507885, upload-time = "2026-02-19T22:32:15.635Z" },
     { url = "https://files.pythonhosted.org/packages/5c/10/3d18e3bbdf8fc50bbb4ac3cc45970aa5a9753c5cb51bf9ed9a3cd8b79fa3/ruff-0.15.2-py3-none-win_amd64.whl", hash = "sha256:d20014e3dfa400f3ff84830dfb5755ece2de45ab62ecea4af6b7262d0fb4f7c5", size = 11623725, upload-time = "2026-02-19T22:32:04.947Z" },
     { url = "https://files.pythonhosted.org/packages/6d/78/097c0798b1dab9f8affe73da9642bb4500e098cb27fd8dc9724816ac747b/ruff-0.15.2-py3-none-win_arm64.whl", hash = "sha256:cabddc5822acdc8f7b5527b36ceac55cc51eec7b1946e60181de8fe83ca8876e", size = 10941649, upload-time = "2026-02-19T22:32:18.108Z" },
+]
+
+[[package]]
+name = "scalar-fastapi"
+version = "1.8.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/af/95/bbbf63b38eafc93862827bda0fba415a486882642d9293f6b918145fd4f9/scalar_fastapi-1.8.1.tar.gz", hash = "sha256:eadb625d386fa94a79e5463af0aa6bcf5e02bc4d665454ed0795960987152531", size = 8258, upload-time = "2026-03-18T09:36:57.005Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/97/29/584cc791765b92a35362733875ff881df3b3d181670285eaf571a17170d7/scalar_fastapi-1.8.1-py3-none-any.whl", hash = "sha256:0ff296877d65082039eba8682fef6eafbe1cd77c5b55a3b3c0b96681eb15ca62", size = 7636, upload-time = "2026-03-18T09:36:56.224Z" },
 ]
 
 [[package]]

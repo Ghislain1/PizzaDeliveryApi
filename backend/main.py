@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 # Externe Libs
 from prometheus_fastapi_instrumentator import Instrumentator
+from scalar_fastapi import get_scalar_api_reference
 
 # Pizza
 
@@ -42,3 +43,8 @@ app.include_router(customer_router)
 @app.get("/")
 def root():
     return {"Hello welcome to my first FastAPI real world Project called Delivery API"}
+
+
+@app.get("/scalar", include_in_schema=False)
+async def scalar_html():
+    return get_scalar_api_reference(openapi_url=app.openapi_url)

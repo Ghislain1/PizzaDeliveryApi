@@ -12,7 +12,7 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/token")
-async def login(
+async def login_customer(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     customer_service: CustomerServiceDep,
 ):
