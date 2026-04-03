@@ -5,12 +5,12 @@ from uuid import UUID
 
 
 class SellerCreate(SellerBase):
-    pass
+    password: str
 
 
 class SellerPublic(SellerBase):
-    id: int
+    id: UUID | None = None
 
 
-class ShipmentUpdate(SellerBase):
+class SellerUpdate(SellerBase):
     id: UUID | None = None
