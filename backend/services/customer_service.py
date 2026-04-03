@@ -1,6 +1,6 @@
 #  passlib[bcrypt] must be installed
 from passlib.context import CryptContext
-from sqlmodel import Session, select
+from sqlmodel import select
 from fastapi.exceptions import HTTPException
 
 from backend.models.customer import Customer
@@ -15,7 +15,7 @@ class CustomerService:
         self.pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
         self.session = session
 
-    async def create_customer(self, customer_create: CustomerCreate):
+    async def create_customer(self, customer_create: CustomerCreate) -> Customer:
         """Create a new customer with hashed password"""
         # Hash the plain password
         hashed_password = self.pwd_context.hash(customer_create.password)
@@ -26,8 +26,8 @@ class CustomerService:
             customer_create, update={"hashed_password": hashed_password}
         )
         self.session.add(db_customer)
-        self.session.commit()
-        self.session.refresh(db_customer)
+        await self.session.commit()
+        await self.session.refresh(db_customer)
         return db_customer
 
     async def load_customers(self, offset: int, limit: int) -> list[Customer]:

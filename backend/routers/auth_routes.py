@@ -3,12 +3,9 @@ from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import Annotated
 
-
 # Own import
 from backend.core.dependencies import CustomerServiceDep
-
-
-from backend.schemas.customer_schema import CustomerCreate
+from backend.schemas.customer_schema import CustomerCreate, CustomerRead
 
 # Router definition for Authentication
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -21,7 +18,9 @@ async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
 
 
 # To Register a customer
-@router.post("/signup")
-async def signup(customer_create: CustomerCreate, customer_service: CustomerServiceDep):
+@router.post("/signup", response_model=CustomerRead)
+async def register_customer(
+    customer_create: CustomerCreate, customer_service: CustomerServiceDep
+):
 
-    await customer_service.create_customer(customer_create)
+    return await customer_service.create_customer(customer_create)
