@@ -5,6 +5,7 @@ from typing import Annotated
 
 # Own import
 from backend.core.dependencies import CustomerServiceDep
+
 from backend.schemas.customer_schema import CustomerCreate, CustomerRead
 
 # Router definition for Authentication
@@ -19,8 +20,7 @@ async def login_customer(
     username = form_data.username
     password = form_data.password
 
-    token = await customer_service.token(username, password=password)
-    return {"access_token": token, "token_type": "bearer"}
+    return await customer_service.token(username, password=password)
 
 
 # To Register a customer

@@ -34,16 +34,18 @@ class CustomerService:
 
     async def load_customers(self, offset: int, limit: int) -> list[Customer]:
         """Load all customers from database"""
-        statement = select(Customer)
-        customers = await self.session.exec(statement.offset(offset).limit(limit)).all()
+        statement = select(Customer).offset(offset).limit(limit)
+        results = await self.session.execute(statement=statement)
+        customers = results.scalars().all()
         return customers
 
     async def is_table_empty(self) -> bool:
         """Load all customers from database"""
         statement = select(Customer)
-        response = await self.session.exec(statement.offset(0).limit(1)).all()
+        response = await self.session.execute(statement.offset(0).limit(1)).all()
         return len(response) == 0
 
+    # @TODO
     def get_customer_by_email(self, email: str):
         """Get Customer  from database"""
         statement = select(Customer)
@@ -96,4 +98,4 @@ class CustomerService:
         key = "ANY_KEY_GHISLAIN"
 
         tk = jwt.encode(payload=payload, key=key, algorithm=algo)
-        return tk
+        return {"access_token": tk, "type": "jwt"}
