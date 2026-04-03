@@ -9,7 +9,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Query
 
-from backend.schemas.customer_schema import CustomerCreate, CustomerPublic
+from backend.schemas.customer_schema import CustomerPublic
 from backend.core.dependencies import CustomerServiceDep, PrinterDep
 
 router = APIRouter(prefix="/customers", tags=["Customers"])

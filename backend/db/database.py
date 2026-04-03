@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 
 
 # POSTGRES_URL = "postgresql://postgres:namej345@localhost/pizza_deliver_db"
-DATABASE_URL = "sqlite+aiosqlite:///./pizza_deliver_db.db"  # U must install aiosqlite
+DATABASE_URL = "sqlite+aiosqlite:///./pizza_deliver.db"  # U must install aiosqlite
 
 
 # 1. ---------------------------------------------------------- Classes --------------------------------------

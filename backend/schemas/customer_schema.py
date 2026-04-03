@@ -12,6 +12,7 @@ class CustomerPublic(CustomBase):
 
 class CustomerCreate(BaseModel):
     email: EmailStr
+    username: str
     password: Optional[str] = "admin"  # ← Plain password from user
 
     def __str__(self):

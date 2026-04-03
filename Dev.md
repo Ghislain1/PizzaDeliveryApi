@@ -5,8 +5,10 @@
   - Customer
 - Signup Endpoint
   - To register a Seller or Customer
-  - Custom password ti be hashed
--  
+  - Custom password to be hashed
+-  Password Hash
+   -  Hashing Algo
+   -  understand package passlib[bcrypt]
 
 
 

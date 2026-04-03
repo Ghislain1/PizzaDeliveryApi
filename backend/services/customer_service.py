@@ -15,18 +15,7 @@ class CustomerService:
         self.pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
         self.session = session
 
-    async def create_customer2(self, customer_create: CustomerCreate):
-        # Hash the plain password
-        hashed_password = self.pwd_context.hash(customer_create.password)
-        db_customer = Customer(
-            **customer_create.model_dump(), hashed_password=hashed_password
-        )
-        self.session.add(db_customer)
-        self.session.refresh(db_customer)
-        await self.session.commit()
-        return db_customer
-
-    def create_customer(self, customer_create: CustomerCreate, session: Session):
+    async def create_customer(self, customer_create: CustomerCreate):
         """Create a new customer with hashed password"""
         # Hash the plain password
         hashed_password = self.pwd_context.hash(customer_create.password)
@@ -36,9 +25,9 @@ class CustomerService:
         db_customer = Customer.model_validate(
             customer_create, update={"hashed_password": hashed_password}
         )
-        session.add(db_customer)
-        session.commit()
-        session.refresh(db_customer)
+        self.session.add(db_customer)
+        self.session.commit()
+        self.session.refresh(db_customer)
         return db_customer
 
     async def load_customers(self, offset: int, limit: int) -> list[Customer]:
